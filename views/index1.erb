@@ -1,0 +1,42 @@
+<h2>
+	Choose a year, month, and country, and see the holidays during that time and place!
+</h2>
+
+<ul>
+	<% @chosenholidays.each do |chosen| %>
+		<p>
+			<%= chosen['name'] %>
+			<%= chosen['date'] %>
+			<%= chosen['country'] %>
+		</p>
+	<% end %>
+</ul>
+
+<% if @chosenholidays.none? %>
+	<p>There are no holidays during this time</p>
+<% end %>
+
+<div id="form">
+	<form>
+	  <select name="month" class="form-control">
+	  	<% %w(january february march april may june july august september october november december).each_with_index do |month, index| %>
+	  		<option value="<%= index + 1 %>" <%= 'selected="selected"' if params['month'].to_i == index + 1 %>> <%= month %> </option>
+	  	<% end %>
+	  </select>
+
+	  <select name="country" class="form-control">
+	    <option value="US" <%= 'selected="selected"' if params['country'] == "US" %>>United States</option>
+	    <option value="GB" <%= 'selected="selected"' if params['country'] == "GB" %>>Great Britain</option>
+	    <option value="BR" <%= 'selected="selected"' if params['country'] == "BR" %>>Brazil</option>
+	    <option value="BE" <%= 'selected="selected"' if params['country'] == "BE" %>>Belgium</option>
+	  </select>
+
+	  <select name="year" class="form-control">
+	  	<% (1990..Time.now.year).each do |year| %>
+	  		<option value="<%= year %>" <%= 'selected="selected"' if params['year'].to_i == year %>> <%= year %> </option>
+	  	<% end %>
+	  </select>
+    
+	  <button type="submit">Submit!</button>
+	</form>
+</div>
